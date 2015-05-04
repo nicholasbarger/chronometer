@@ -1,0 +1,38 @@
+﻿.chronometer {
+    width: 190px;
+}
+
+.chronometer-time {
+    background-color: #fff;
+    border: 1px solid #000;
+    margin-top: 5px;
+}
+
+.chronometer + table {
+    background-color: #fff;
+    border: 1px solid #000;
+    margin-top: 5px;
+}
+
+.chronometer + table td {
+    text-align: center;
+}
+
+.chronometer + table tbody td {
+    border: 1px solid #ccc;
+    min-width: 20px;
+    cursor: pointer;
+}
+
+.chronometer + table td.last-month, .chronometer + table td.next-month {
+    background-color: #f6f6f6;
+    color: #666;
+}
+
+.chronometer + table td.today {
+    background-color: #ffffcc;
+}
+
+.chronometer + table td.selectedDate {
+    background-color: lightgreen;
+}
