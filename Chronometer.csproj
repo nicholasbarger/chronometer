@@ -73,7 +73,7 @@
   <ItemGroup>
     <Content Include="control.css" />
     <Content Include="Index.html" />
-    <Content Include="lipstick.css" />
+    <Content Include="examples.css" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />

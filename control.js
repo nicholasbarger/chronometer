@@ -13,6 +13,25 @@
                 includeTime: false
             }, options);
 
+            // this snippet is temporary and has known accuracy issues with some timezones but it's the best available
+            // at this point, see https://github.com/moment/moment-timezone/issues/138
+            var tzdetect = {
+                names: moment.tz.names(),
+                matches: function (base) {
+                    var results = [], now = Date.now(), makekey = function (id) {
+                        return [0, 4, 8, -5 * 12, 4 - 5 * 12, 8 - 5 * 12, 4 - 2 * 12, 8 - 2 * 12].map(function (months) {
+                            var m = moment(now + months * 30 * 24 * 60 * 60 * 1000);
+                            if (id) m.tz(id);
+                            return m.format("DDHHmm");
+                        }).join(' ');
+                    }, lockey = makekey(base);
+                    tzdetect.names.forEach(function (id) {
+                        if (makekey(id) === lockey) results.push(id);
+                    });
+                    return results;
+                }
+            };
+
             // select day and refresh output
             this.selectDay = function(elem, date) {
                 // set selected date to be used when updating timezone
@@ -551,6 +570,11 @@
             function init(date) {
                 _selectedDate = moment(date);
                 self.generateCalendar();
+
+                var localTimezone = tzdetect.matches()[0];
+                console.log(localTimezone);
+                $('#' + id + ' + table + table.chronometer-time select').val(localTimezone);
+
                 self.refreshOutput();
             };
             init(date);
