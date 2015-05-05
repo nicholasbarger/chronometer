@@ -9,7 +9,7 @@
             // set defaults
             var _settings = $.extend({
                 inputFormat: 'YYYY-MM-DD',
-                outputFormat: 'YYYY-MM-DD hh:mm Z z',
+                outputFormat: 'YYYY-MM-DD',
                 includeTime: false
             }, options);
 
@@ -30,6 +30,18 @@
                     });
                     return results;
                 }
+            };
+
+            this.nextMonth = function () {
+                _selectedDate = _selectedDate.add(1, 'month');
+                self.generateCalendar();
+                self.refreshOutput();
+            };
+
+            this.prevMonth = function () {
+                _selectedDate = _selectedDate.subtract(1, 'month');
+                self.generateCalendar();
+                self.refreshOutput();
             };
 
             // select day and refresh output
@@ -511,7 +523,7 @@
                 }
 
                 // generate top of table
-                output += '<table><thead><tr><td><a href="#">&lt;</a></td><th colspan="5">' + _selectedDate.format('MMMM') + '</th><td><a href="#">&gt;</a></td></tr><tr><th>Su</th><th>M</th><th>Tu</th><th>W</th><th>Th</th><th>F</th><th>Sa</th></tr></thead><tbody>';
+                output += '<table><thead><tr><td><a href="javascript:void(0);" onclick="' + id + '.prevMonth()">&lt;</a></td><th colspan="5">' + _selectedDate.format('MMMM') + '</th><td><a href="javascript:void(0);" onclick="' + id + '.nextMonth()">&gt;</a></td></tr><tr><th>Su</th><th>M</th><th>Tu</th><th>W</th><th>Th</th><th>F</th><th>Sa</th></tr></thead><tbody>';
 
                 // loop through dates to be added and add a row every 7 entries
                 for (var i = 0; i <= (datesToDisplay.length - 1) / 7; i++) {
