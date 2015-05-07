@@ -45,12 +45,12 @@
             };
 
             // select day and refresh output
-            this.selectDay = function(elem, date) {
+            this.selectDay = function (elem, date) {
                 // set selected date to be used when updating timezone
                 _selectedDate = moment(date);
 
                 // clear css from past selected element
-                $('#' + id + ' + table .selectedDate').removeClass('selectedDate');
+                $('#' + id + ' + .chronometer-container .selectedDate').removeClass('selectedDate');
 
                 // decorate the element with selected class
                 $(elem).addClass('selectedDate');
@@ -503,7 +503,7 @@
             }
 
             // generate calendar
-            this.generateCalendar = function() {
+            this.generateCalendar = function () {
                 var output = '';
                 var datesToDisplay = [];
 
@@ -523,7 +523,7 @@
                 }
 
                 // generate top of table
-                output += '<table><thead><tr><td><a href="javascript:void(0);" onclick="' + id + '.prevMonth()">&lt;</a></td><th colspan="5">' + _selectedDate.format('MMMM') + '</th><td><a href="javascript:void(0);" onclick="' + id + '.nextMonth()">&gt;</a></td></tr><tr><th>Su</th><th>M</th><th>Tu</th><th>W</th><th>Th</th><th>F</th><th>Sa</th></tr></thead><tbody>';
+                output += '<table class="chronometer-calendar"><thead><tr><td><a href="javascript:void(0);" onclick="' + id + '.prevMonth()">&lt;</a></td><th colspan="5">' + _selectedDate.format('MMMM') + '</th><td><a href="javascript:void(0);" onclick="' + id + '.nextMonth()">&gt;</a></td></tr><tr><th>Su</th><th>M</th><th>Tu</th><th>W</th><th>Th</th><th>F</th><th>Sa</th></tr></thead><tbody>';
 
                 // loop through dates to be added and add a row every 7 entries
                 for (var i = 0; i <= (datesToDisplay.length - 1) / 7; i++) {
@@ -540,10 +540,10 @@
                         }
                         else if (cm.month() < _selectedDate.month()) { // check if last month
                             output += 'class="last-month">';
-                        } 
+                        }
                         else if (cm.month() > _selectedDate.month()) { // check if next month
                             output += 'class="next-month">';
-                        } 
+                        }
                         else if (cm.month() == moment().month() && cm.date() == moment().date()) {  // check if today
                             output += 'class="today">';
                         }
@@ -565,17 +565,48 @@
                     output += generateTimeSelector();
                 }
 
+                // clear previously generated calendar
+                var container = $(self).next('.chronometer-container');
+                if (container != null && container.length > 0) {
+                    container.html('');
+                }
+                else {
+                    $(self).after('<div class="chronometer-container"></div>');
+                    container = $(self).next('.chronometer-container');
+                }
+
                 // assign formatted html to calendar
-                $(self).after(output);
+                container.html(output);
             };
 
             // refresh output of element
-            this.refreshOutput = function() {
+            this.refreshOutput = function () {
                 // use moment to get date
                 var output = _selectedDate.format(_settings.outputFormat);
 
                 // set output of chronometer input control
                 $(self).val(output);
+
+                // raise event to notify that the value has changed
+                var event; // The custom event that will be created
+                var event_id = id + '_updated';
+
+                if (document.createEvent) {
+                    event = document.createEvent("HTMLEvents");
+                    event.initEvent(event_id, true, true);
+                } else {
+                    event = document.createEventObject();
+                    event.eventType = event_id;
+                }
+
+                event.eventName = event_id;
+                event.val = output;
+
+                if (document.createEvent) {
+                    document.dispatchEvent(event);
+                } else {
+                    document.fireEvent("on" + event.eventType, event);
+                }
             };
 
             // init
@@ -585,7 +616,7 @@
 
                 var localTimezone = tzdetect.matches()[0];
                 console.log(localTimezone);
-                $('#' + id + ' + table + table.chronometer-time select').val(localTimezone);
+                $('#' + id + ' + .chronometer-container select').val(localTimezone);
 
                 self.refreshOutput();
             };

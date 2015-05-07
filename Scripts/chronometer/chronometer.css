@@ -2,37 +2,47 @@
     width: 190px;
 }
 
+.chronometer-container {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.chronometer:focus + .chronometer-container, .chronometer-container:hover {
+    display: block;
+}
+
 .chronometer-time {
     background-color: #fff;
     border: 1px solid #000;
     margin-top: 5px;
 }
 
-.chronometer + table {
+.chronometer-calendar {
     background-color: #fff;
     border: 1px solid #000;
     margin-top: 5px;
 }
 
-.chronometer + table td {
+.chronometer-calendar td {
     text-align: center;
 }
 
-.chronometer + table tbody td {
+.chronometer-calendar tbody td {
     border: 1px solid #ccc;
     min-width: 20px;
     cursor: pointer;
 }
 
-.chronometer + table td.last-month, .chronometer + table td.next-month {
+.chronometer-calendar td.last-month, .chronometer-calendar td.next-month {
     background-color: #f6f6f6;
     color: #666;
 }
 
-.chronometer + table td.today {
+.chronometer-calendar td.today {
     background-color: #ffffcc;
 }
 
-.chronometer + table td.selectedDate {
+.chronometer-calendar td.selectedDate {
     background-color: lightgreen;
 }

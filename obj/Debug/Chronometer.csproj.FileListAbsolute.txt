@@ -4,7 +4,6 @@ C:\Code\Sandbox\Chronometer\Chronometer\bin\Chronometer.pdb
 C:\Code\Sandbox\Chronometer\Chronometer\obj\Debug\Chronometer.csprojResolveAssemblyReference.cache
 C:\Code\Sandbox\Chronometer\Chronometer\obj\Debug\Chronometer.dll
 C:\Code\Sandbox\Chronometer\Chronometer\obj\Debug\Chronometer.pdb
-C:\Code\Opensource\chronometer\Chronometer\bin\Chronometer.dll.config
 C:\Code\Opensource\chronometer\Chronometer\bin\Chronometer.dll
 C:\Code\Opensource\chronometer\Chronometer\bin\Chronometer.pdb
 C:\Code\Opensource\chronometer\Chronometer\obj\Debug\Chronometer.csprojResolveAssemblyReference.cache
