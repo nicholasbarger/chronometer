@@ -16,7 +16,8 @@
         $(function () {
 
             // create calendar    
-            var sample1 = $('#sample1').chronometer(new Date(2015, 4, 25, 10, 30));
+            //var sample1 = $('#sample1').chronometer(new Date(2015, 4, 25, 10, 30));
+            var sample1 = $('#sample1').chronometer();
             console.log(sample1);
 
             var sample2 = $('#sample2').chronometer(new Date(2015, 9, 1, 2), { outputFormat: 'YYYY-MM-DD hh:mm Z z', includeTime: true });

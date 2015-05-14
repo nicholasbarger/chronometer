@@ -507,23 +507,28 @@
                 var output = '';
                 var datesToDisplay = [];
 
+                var startingDate = moment(new Date());
+                if (date) {
+                    startingDate = _selectedDate;
+                }
+
                 // get start of active month
-                var startOfMonth = _selectedDate.clone().startOf('month');
+                var startOfMonth = startingDate.clone().startOf('month');
 
                 // day of the week for the start of the month 
                 var weekDayOfStartOfMonth = startOfMonth.weekday();
                 for (var i = weekDayOfStartOfMonth; i > 0; i--) {
-                    datesToDisplay.push(_selectedDate.clone().subtract(i, 'days'));
+                    datesToDisplay.push(startingDate.clone().subtract(i, 'days'));
                 }
 
                 // add days from this month as long as it doesn't exceed max number (42)
-                var totalDaysInMonth = _selectedDate.daysInMonth();
+                var totalDaysInMonth = startingDate.daysInMonth();
                 for (var i = 0; i < (42 - weekDayOfStartOfMonth) ; i++) {
                     datesToDisplay.push(startOfMonth.clone().add(i, 'days'));
                 }
 
                 // generate top of table
-                output += '<table class="chronometer-calendar"><thead><tr><td><a href="javascript:void(0);" onclick="' + id + '.prevMonth()">&lt;</a></td><th colspan="5">' + _selectedDate.format('MMMM') + '</th><td><a href="javascript:void(0);" onclick="' + id + '.nextMonth()">&gt;</a></td></tr><tr><th>Su</th><th>M</th><th>Tu</th><th>W</th><th>Th</th><th>F</th><th>Sa</th></tr></thead><tbody>';
+                output += '<table class="chronometer-calendar"><thead><tr><td><a href="javascript:void(0);" onclick="' + id + '.prevMonth()">&lt;</a></td><th colspan="5">' + startingDate.format('MMMM') + '</th><td><a href="javascript:void(0);" onclick="' + id + '.nextMonth()">&gt;</a></td></tr><tr><th>Su</th><th>M</th><th>Tu</th><th>W</th><th>Th</th><th>F</th><th>Sa</th></tr></thead><tbody>';
 
                 // loop through dates to be added and add a row every 7 entries
                 for (var i = 0; i <= (datesToDisplay.length - 1) / 7; i++) {
@@ -535,13 +540,13 @@
                         output += "<td onclick=\"" + id + ".selectDay(this, '" + cm.toISOString() + "')\"";
 
                         // check if the date is the selected date
-                        if (_selectedDate != null && cm.month() == _selectedDate.month() && cm.date() == _selectedDate.date()) {
+                        if (startingDate != null && cm.month() == startingDate.month() && cm.date() == startingDate.date()) {
                             output += 'class="selectedDate">';
                         }
-                        else if (cm.month() < _selectedDate.month()) { // check if last month
+                        else if (cm.month() < startingDate.month()) { // check if last month
                             output += 'class="last-month">';
                         }
-                        else if (cm.month() > _selectedDate.month()) { // check if next month
+                        else if (cm.month() > startingDate.month()) { // check if next month
                             output += 'class="next-month">';
                         }
                         else if (cm.month() == moment().month() && cm.date() == moment().date()) {  // check if today
@@ -581,6 +586,11 @@
 
             // refresh output of element
             this.refreshOutput = function () {
+                // if _selecteddate is still null (not specified), then skip out early
+                if (_selectedDate == null) {
+                    return;
+                }
+
                 // use moment to get date
                 var output = _selectedDate.format(_settings.outputFormat);
 
@@ -611,11 +621,18 @@
 
             // init
             function init(date) {
-                _selectedDate = moment(date);
+                
+                // because we don't want to show a date if no value is passed in yet (non-mandatory field for example),
+                // don't create moment if null
+                if (date) {
+                    _selectedDate = moment(date);
+                }
+
+                // generate calendar
                 self.generateCalendar();
 
+                // set local timezone
                 var localTimezone = tzdetect.matches()[0];
-                console.log(localTimezone);
                 $('#' + id + ' + .chronometer-container select').val(localTimezone);
 
                 self.refreshOutput();
