@@ -1,3 +1,8 @@
+#Bower scripts
+/Scripts/jquery
+/Scripts/moment
+/Scripts/moment-timezone
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

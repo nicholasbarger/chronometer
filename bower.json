@@ -1,0 +1,29 @@
+{
+  "name": "chronometer",
+  "version": "1.0.3",
+  "homepage": "https://github.com/nicholasbarger/chronometer",
+  "authors": [
+    "Nicholas Barger <nicholas@nicholasbarger.com>"
+  ],
+  "description": "Chronometer Datetimezone Picker",
+  "main": "/Scripts/chronometer/chronometer.js",
+  "keywords": [
+    "date",
+    "datetime",
+    "timezone",
+    "picker"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.1.3",
+    "moment": "2.10.2",
+    "moment-timezone": "0.3.0"
+  }
+}
