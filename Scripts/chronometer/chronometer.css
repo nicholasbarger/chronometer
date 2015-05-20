@@ -1,10 +1,18 @@
 ﻿.chronometer {
+
 }
 
 .chronometer-container {
     display: none;
+    background-color: white;
+    padding: 5px;
+    text-align: center;
     position: absolute;
     z-index: 1;
+
+    -webkit-box-shadow: 0px 10px 30px rgba(25, 25, 25, 0.92);
+    -moz-box-shadow: 0px 10px 30px rgba(25, 25, 25, 0.92);
+    box-shadow: 0px 10px 30px rgba(25, 25, 25, 0.92);
 }
 
 .chronometer:focus + .chronometer-container, .chronometer-container:hover {
@@ -19,11 +27,12 @@
 
 .chronometer-calendar {
     background-color: #fff;
-    border: 1px solid #000;
+    /*border: 1px solid #000;*/
     margin-top: 5px;
 }
 
 .chronometer-calendar td {
+    padding: 5px;
     text-align: center;
 }
 
@@ -34,8 +43,8 @@
 }
 
 .chronometer-calendar td.last-month, .chronometer-calendar td.next-month {
-    background-color: #f6f6f6;
-    color: #666;
+    background-color: #DBDBDB;
+    color: #808080;
 }
 
 .chronometer-calendar td.today {
@@ -44,4 +53,8 @@
 
 .chronometer-calendar td.selectedDate {
     background-color: lightgreen;
+    font-weight: bold;
+}
+.chronometer-calendar > thead > tr > th {
+    text-align: center;
 }
