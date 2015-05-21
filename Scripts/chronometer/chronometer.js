@@ -33,12 +33,24 @@
             };
 
             this.nextMonth = function () {
+
+                // If no date is selected, start with today
+                if(!_selectedDate) {
+                    _selectedDate = moment(new Date());
+                }
+
                 _selectedDate = _selectedDate.add(1, 'month');
                 self.generateCalendar();
                 self.refreshOutput();
             };
 
             this.prevMonth = function () {
+
+                // If no date is selected, start with today
+                if(!_selectedDate) {
+                    _selectedDate = moment(new Date());
+                }
+
                 _selectedDate = _selectedDate.subtract(1, 'month');
                 self.generateCalendar();
                 self.refreshOutput();
