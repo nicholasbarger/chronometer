@@ -518,7 +518,7 @@
                 // day of the week for the start of the month 
                 var weekDayOfStartOfMonth = startOfMonth.weekday();
                 for (var i = weekDayOfStartOfMonth; i > 0; i--) {
-                    datesToDisplay.push(startingDate.clone().subtract(i, 'days'));
+                    datesToDisplay.push(startOfMonth.clone().subtract(i, 'days'));
                 }
 
                 // add days from this month as long as it doesn't exceed max number (42)
