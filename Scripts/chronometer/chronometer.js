@@ -10,6 +10,7 @@
             var _settings = $.extend({
                 inputFormat: 'YYYY-MM-DD',
                 outputFormat: 'YYYY-MM-DD',
+                displayFormat: 'MM-DD-YYYY',
                 includeTime: false
             }, options);
 
@@ -33,12 +34,24 @@
             };
 
             this.nextMonth = function () {
+
+                // If no date is selected, start with today
+                if (!_selectedDate) {
+                    _selectedDate = moment(new Date());
+                }
+
                 _selectedDate = _selectedDate.add(1, 'month');
                 self.generateCalendar();
                 self.refreshOutput();
             };
 
             this.prevMonth = function () {
+
+                // If no date is selected, start with today
+                if (!_selectedDate) {
+                    _selectedDate = moment(new Date());
+                }
+
                 _selectedDate = _selectedDate.subtract(1, 'month');
                 self.generateCalendar();
                 self.refreshOutput();
@@ -78,6 +91,12 @@
             // select today
             this.selectToday = function () {
                 self.selectDay(new Date());
+            };
+
+            // update the model to handle for conversion between display value and model
+            this.updateModel = function (elem) {
+                _selectedDate = moment(elem.value);
+                self.refreshOutput();
             };
 
             // generate time selector and timezone dropdown
@@ -515,7 +534,7 @@
                 // get start of active month
                 var startOfMonth = startingDate.clone().startOf('month');
 
-                // day of the week for the start of the month 
+                // day of the week for the start of the month
                 var weekDayOfStartOfMonth = startOfMonth.weekday();
                 for (var i = weekDayOfStartOfMonth; i > 0; i--) {
                     datesToDisplay.push(startOfMonth.clone().subtract(i, 'days'));
@@ -593,9 +612,11 @@
 
                 // use moment to get date
                 var output = _selectedDate.format(_settings.outputFormat);
+                var display = _selectedDate.format(_settings.displayFormat);
 
                 // set output of chronometer input control
-                $(self).val(output);
+                $(self).val(display);
+                $('#' + id + '_hidden').val(output);
 
                 // raise event to notify that the value has changed
                 var event; // The custom event that will be created
@@ -621,7 +642,15 @@
 
             // init
             function init(date) {
-                
+
+                // add change event to fire if manually updating the date without using picker
+                $(self).change(this, function () {
+                    self.updateModel(this);
+                });
+
+                // add hidden input to track real value as opposed to display value
+                $('#' + id).after('<input id="' + id + '_hidden" type="hidden" style="background-color: red;" />');
+
                 // because we don't want to show a date if no value is passed in yet (non-mandatory field for example),
                 // don't create moment if null
                 if (date) {

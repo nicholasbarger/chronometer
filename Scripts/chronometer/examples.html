@@ -15,13 +15,15 @@
 
         $(function () {
 
-            // create calendar    
-            //var sample1 = $('#sample1').chronometer(new Date(2015, 4, 25, 10, 30));
+            // create calendar
             var sample1 = $('#sample1').chronometer();
             console.log(sample1);
 
-            var sample2 = $('#sample2').chronometer(new Date(2015, 9, 1, 2), { outputFormat: 'YYYY-MM-DD hh:mm Z z', includeTime: true });
+            var sample2 = $('#sample2').chronometer(new Date(2015, 4, 25, 10, 30));
             console.log(sample2);
+
+            var sample3 = $('#sample3').chronometer(new Date(2015, 9, 1, 2), { outputFormat: 'YYYY-MM-DD hh:mm Z z', includeTime: true });
+            console.log(sample3);
         });
     </script>
 </head>
@@ -40,10 +42,13 @@
         <h3>Simple Date</h3>
         <p>Pick a date in the following format: 'YYYY-MM-DD'.  The end output should not have any time or timezone information.</p>
         <input type="text" id="sample1" class="chronometer" />
-        
+
+        <p>Another Date Test</p>
+        <input type="text" id="sample2" class="chronometer" />
+
         <h3>Simple Datetime</h3>
         <p>Pick a date and time in the following format: 'YYYY-MM-DD hh:mm Z z' as well as a provided timezone. The timezone indicates the timezone for the entry and should default to the current local timezone.</p>
-        <input type="text" id="sample2" class="chronometer" />
+        <input type="text" id="sample3" class="chronometer" />
     </section>
 </body>
 </html>
